@@ -11,6 +11,7 @@ const sendBasicEmail = async (from, to, subject, text) => {
       subject,
       text,
     });
+    console.log(response);
   } catch (error) {
     console.log(error);
   }
@@ -18,7 +19,8 @@ const sendBasicEmail = async (from, to, subject, text) => {
 
 const fetchPendingEmails = async () => {
   try {
-    const response = await repository.getAll();
+    const response = await repository.get({ status: "PENDING" });
+    console.log(response);
     return response;
   } catch (error) {
     console.log(error);
@@ -34,8 +36,18 @@ const createTicket = async (data) => {
   }
 };
 
+const updateTicket = async (ticketId, data) => {
+  try {
+    const response = await repository.update(ticketId, data);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   sendBasicEmail,
   fetchPendingEmails,
   createTicket,
+  updateTicket,
 };
